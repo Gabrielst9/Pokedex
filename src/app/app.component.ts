@@ -6,66 +6,15 @@ import { NgClass, NgForOf } from '@angular/common';
 import { converterParaTitleCase } from './util/converter-para-title-case';
 import { TipoPokemon } from './models/tipo-pokemon';
 import { CoresBackgroundTipo } from './models/cores-background-tipo';
+import { ListagemComponent } from "./components/listagem/listagem.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NgForOf, NgClass ,NavbarComponent],
+  imports: [NgForOf, NgClass, NavbarComponent, ListagemComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
-  public pokemons: Pokemon[];
+export class AppComponent{
 
-  public coresBackgroundTipo: CoresBackgroundTipo = {
-    Normal: 'fundo-tipo-normal',
-    Fire: 'fundo-tipo-fogo',
-    Water: 'fundo-tipo-agua',
-    Electric: 'fundo-tipo-eletrico',
-    Ice: 'fundo-tipo-gelo',
-    Grass: 'fundo-tipo-grama',
-    Bug: 'fundo-tipo-inseto',
-    Poison: 'fundo-tipo-veneno',
-    Flying: 'fundo-tipo-voador',
-    Ground: 'fundo-tipo-terra',
-    Rock: 'fundo-tipo-pedra',
-    Fighting: 'fundo-tipo-lutador',
-    Psychic: 'fundo-tipo-psiquico',
-    Ghost: 'fundo-tipo-fantasma',
-    Dark: 'fundo-tipo-sombrio',
-    Fairy: 'fundo-tipo-fada',
-    Steel: 'fundo-tipo-aco',
-  };
-
-  constructor(private pokeApiService : PokeApiService) {
-    this.pokemons = [];
-  }
-
-  ngOnInit(): void { //lazy loading
-    this.pokeApiService.selecionarTodos().subscribe((res) =>{
-      const arrayResultados = res.results as any[];
-
-      for(let resultado of arrayResultados) [
-        this.pokeApiService.selecionarDetalhesPorUrl(resultado.url).subscribe((objDetalhes: any)=> {
-          const pokemon = this.mapearPokemon(objDetalhes);
-
-          this.pokemons.push(pokemon);
-        })
-      ]
-    });
-
-    console.log(this.pokemons);
-  }
-
-  private mapearPokemon(obj: any): Pokemon {
-    return {
-      nome: converterParaTitleCase(obj.name),
-      urlSprite: obj.sprites.other.dream_world.front_default,
-      tipos: obj.types.map(this.mapearTipoPokemon)
-    }
-  }
-
-  private mapearTipoPokemon(obj: any): TipoPokemon {
-    return { nome: converterParaTitleCase(obj.type.name)}
-  }
 }
