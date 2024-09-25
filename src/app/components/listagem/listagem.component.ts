@@ -7,6 +7,7 @@ import { converterParaTitleCase } from '../../util/converter-para-title-case';
 import { TipoPokemon } from '../../models/tipo-pokemon';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { RouterLink } from '@angular/router';
+import { mapearTipoPokemon } from '../../util/mapear-tipo-pokemon';
 
 @Component({
   selector: 'app-listagm',
@@ -47,27 +48,26 @@ export class ListagemComponent implements OnInit{
     this.pokeApiService.selecionarTodos().subscribe((res) =>{
       const arrayResultados = res.results as any[];
 
-      for(let resultado of arrayResultados) [
+      for(let resultado of arrayResultados) {
         this.pokeApiService.selecionarDetalhesPorUrl(resultado.url).subscribe((objDetalhes: any)=> {
           const pokemon = this.mapearPokemon(objDetalhes);
 
           this.pokemons.push(pokemon);
         })
-      ]
+      }
+      
+      this.pokemons.sort((p) => p.id);
     });
-
-    console.log(this.pokemons);
   }
+
 
   private mapearPokemon(obj: any): Pokemon {
     return {
+      id: obj.id,
       nome: converterParaTitleCase(obj.name),
       urlSprite: obj.sprites.other.dream_world.front_default,
-      tipos: obj.types.map(this.mapearTipoPokemon)
-    }
+      tipos: obj.types.map(mapearTipoPokemon),
+    };
   }
 
-  private mapearTipoPokemon(obj: any): TipoPokemon {
-    return { nome: converterParaTitleCase(obj.type.name)}
-  }
 }

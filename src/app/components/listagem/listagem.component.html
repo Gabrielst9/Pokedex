@@ -6,7 +6,7 @@
     >
 
     <div class="app-card-pokemon card">
-        <a class="stretched-link" title="Link" routerLink="/detalhes" ></a>
+        <a class="stretched-link" [title]="'Detalhes de: '+ pokemon.nome" [routerLink]="['/detalhes/'+ pokemon.id]" ></a>
         <div class="card-header border-bottom-0 bg-transparent text-center">
           <label class="card-title fs-5 fw-bold">{{ pokemon.nome }}</label>
 
