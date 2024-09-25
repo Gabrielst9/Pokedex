@@ -7,11 +7,12 @@ import { converterParaTitleCase } from './util/converter-para-title-case';
 import { TipoPokemon } from './models/tipo-pokemon';
 import { CoresBackgroundTipo } from './models/cores-background-tipo';
 import { ListagemComponent } from "./components/listagem/listagem.component";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NgForOf, NgClass, NavbarComponent, ListagemComponent],
+  imports: [RouterOutlet ,NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
