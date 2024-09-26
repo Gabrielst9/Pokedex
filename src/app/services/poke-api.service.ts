@@ -11,8 +11,10 @@ export class PokeApiService {
 
   constructor(private http: HttpClient) { }
 
-  public selecionarTodos(): Observable<any> {
-    return this.http.get(this.url);
+  public selecionarTodos(offset: number = 0): Observable<any> {
+    const urlCompleto = `${this.url}?offset=${offset}`
+
+    return this.http.get(urlCompleto);
   }
 
   public selecionarDetalhesPorUrl(url: string): Observable<any> {
@@ -20,8 +22,8 @@ export class PokeApiService {
   }
 
   public selecionarDetalhesPorId(id: number) {
-    const urlCompleeto = `${this.url}/${id}`
+    const urlCompleto = `${this.url}/${id}`
 
-    return this.http.get<any>(urlCompleeto);
+    return this.http.get<any>(urlCompleto);
   }
 }

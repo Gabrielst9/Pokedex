@@ -39,13 +39,25 @@ export class ListagemComponent implements OnInit{
     Steel: 'fundo-tipo-aco',
   };
 
+  private offsetPaginação: number;
+
   constructor(private pokeApiService : PokeApiService) {
     this.pokemons = [];
+    this.offsetPaginação = 0;
   }
 
+  public ngOnInit(): void {
+    this.obterPokemons();
+  }
 
-  ngOnInit(): void { //lazy loading
-    this.pokeApiService.selecionarTodos().subscribe((res) =>{
+  public buscarMaisResultados(): void {
+    this.offsetPaginação += 20;
+
+    this.obterPokemons();
+  }
+
+  private obterPokemons(){
+    this.pokeApiService.selecionarTodos(this.offsetPaginação).subscribe((res) =>{
       const arrayResultados = res.results as any[];
 
       for(let resultado of arrayResultados) {
@@ -55,7 +67,7 @@ export class ListagemComponent implements OnInit{
           this.pokemons.push(pokemon);
         })
       }
-      
+
       this.pokemons.sort((p) => p.id);
     });
   }

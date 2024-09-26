@@ -7,7 +7,8 @@
 
     <div class="app-card-pokemon card">
         <a class="stretched-link" [title]="'Detalhes de: '+ pokemon.nome" [routerLink]="['/detalhes/'+ pokemon.id]" ></a>
-        <div class="card-header border-bottom-0 bg-transparent text-center">
+
+        <div class="card-header bg-transparent border text-center">
           <label class="card-title fs-5 fw-bold">{{ pokemon.nome }}</label>
 
           <div class="d-flex justify-content-center gap-2">
@@ -27,7 +28,12 @@
             alt="Foto do {{ pokemon.nome }}"
           />
         </div>
+        <label class="font-monospace  text-center fw-semibold fs-5">N° {{ pokemon.id }}</label>
       </div>
     </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <button (click)="buscarMaisResultados()" class="btn btn-lg btn-primary p-3 rounded-5">Carregar mais opções</button>
   </div>
 </main>
